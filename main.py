@@ -11,6 +11,11 @@ def main():
 
     pygame.init()
 
+    updatable = pygame.sprite.Group()
+    drawable = pygame.sprite.Group()
+
+    Player.containers = (updatable, drawable)
+
     time_clock = pygame.time.Clock()
     dt = 0
 
@@ -29,9 +34,11 @@ def main():
             if event.type == pygame.QUIT:
                 return
 
+        updatable.update(dt)
         screen.fill((1,1,1))
-        the_player.update(dt)
-        the_player.draw(screen)
+
+        for obj in drawable:
+            obj.draw(screen)
         pygame.display.flip()
 
         delta_time = time_clock.tick(60)
